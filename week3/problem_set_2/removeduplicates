@@ -1,0 +1,9 @@
+def remove_duplicates(nums):
+    uniquelist = []
+    for num in nums:
+        if num not in uniquelist:
+            uniquelist.append(num)
+    return uniquelist
+
+nums = [1,1,1,2,3,4,4,5,6,6]
+print(remove_duplicates(nums))
