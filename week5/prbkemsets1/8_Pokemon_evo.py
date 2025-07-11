@@ -6,58 +6,32 @@
 #Write a function get_evolutionary_line() that takes in a Pokemon object starter_pokemon as a parameter.
 
 #The function should return a list of itself and the Pokemon that the starter_pokemon can evolve into.
-class Pokemon:
-    name = ""
-    types = []
-    is_caught = False
-    
-    def __init__(self, name, types):
+
+class Pokemon():
+    def __init__(self, name, types, evolution=None):
         self.name = name
         self.types = types
         self.is_caught = False
+        self.evolution = evolution
 
-    def print_pokemon(self):
-        print({
-            "name": self.name,   # Output: "name": "Squirtle",
-            "types": self.types, # Output: "types": ["Water"],
-            "is_caught": self.is_caught # Output: "is_caught": False
-        })
-        
-    def catch(self):
-        self.is_caught = True
-        
-    def choose(self):
-        if self.is_caught:
-            print(f"{self.name} I choose you!")
-        else:
-            print(f"{self.name} is wild! Catch them if you can!")
-        
-    def add_type(self, new_type):
-        self.types.append(new_type)
+def get_evolutionary_line(starter_pokemon):
+    evo_list = []
+    while starter_pokemon:
+        evo_list.append(starter_pokemon.name)
+        starter_pokemon = starter_pokemon.evolution
+    return evo_list
 
+# Example evolution chain
+charizard = Pokemon("Charizard", ["fire", "flying"])
+charmeleon = Pokemon("Charmeleon", ["fire"], charizard)
+charmander = Pokemon("Charmander", ["fire"], charmeleon)
 
+# Testing the function
+charmander_list = get_evolutionary_line(charmander)
+print(charmander_list)  # ['Charmander', 'Charmeleon', 'Charizard']
 
-def get_by_type(my_pokemon, pokemon_type):
-    lst = []
-    for pokemon in my_pokemon:
-        for i in pokemon.types:
-            if i == pokemon_type:
-                lst.append(pokemon.name)
+charmeleon_list = get_evolutionary_line(charmeleon)
+print(charmeleon_list)  # ['Charmeleon', 'Charizard']
 
-                
-        
-        
-            
-    
-    return lst
-
-jigglypuff = Pokemon("Jigglypuff", ["Normal", "Fairy"])
-diglett = Pokemon("Diglett", ["Ground"])
-meowth = Pokemon("Meowth", ["Normal"])
-pidgeot = Pokemon("Pidgeot", ["Normal", "Flying"])
-blastoise = Pokemon("Blastoise", ["Water"])
-
-my_pokemon = [jigglypuff, diglett, meowth, pidgeot, blastoise]
-normal_pokemon = get_by_type(my_pokemon, "Normal")
-print(normal_pokemon)
-#print(jigglypuff.print_pokemon())
+charizard_list = get_evolutionary_line(charizard)
+print(charizard_list)  # ['Charizard']
